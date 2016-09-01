@@ -1,2 +1,2 @@
-# studyscala
-快学scala代码和笔记
+# note
+所有的学习笔记
