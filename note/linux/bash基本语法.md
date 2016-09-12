@@ -8,7 +8,7 @@ bash基本语法
 
 ## 1、变量
 
-bash无需声明变量，*变量名只能包含字母和数字，不能以数字开头*
+bash无需声明变量，*变量名只能包含字母和数字，不能以数字开头*</br>
 
 ### 1.1 初始化/赋值
 
@@ -34,6 +34,38 @@ bash无需声明变量，*变量名只能包含字母和数字，不能以数字
 使用$引用一个变量
     
     $currentFolder
+
+### 1.3 作用域
+
+bash中自定变量的作用域不像一般的oo变成语言中的变量会限制在`{}`中</br>
+在脚本中任何位置声明的变量，在之后代码中都能使用
+    
+    #!/bin/bash 
+
+    #   Program:
+    #       variable scope
+    #   author:
+    #       xuezhang212177@sohu-inc.com
+    
+    number=12
+
+    echo "声明一个局部变量localvar还没有声明，\$localvar的结果是空$localvar"
+    
+    if [ $number -gt 10 ]; then
+        echo "声明一个局部变量localvar"
+        localvar="我是在if中声明的局部变量"
+    fi
+    
+    echo "localvar在if中声明，但是在if外也可以用\$localvar=$localvar"    
+
+结果如下
+
+    声明一个局部变量localvar还没有声明，$localvar的结果是空
+    声明一个局部变量localvar
+    localvar在if中声明，但是在if外也可以用$localvar=我是在if中声明的局部变量
+
+另外，子程序会继承父程序的环境变量，但是不会继承父程序的自定变量</br>
+使用`export 变量名称`将一个自定变量变成环境变量</br>
 
 ## 2、运算
 
