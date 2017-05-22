@@ -1,5 +1,3 @@
-## KMP算法演绎之路
-
 #### 前言
 
 模式匹配是数据结构需要解决的经典问题之一，由此衍生出许多算法。本文介绍模式匹配算法的复杂度从`o(mn)`逐步演化到`o(m+n)`的过程。
@@ -75,7 +73,7 @@ KMP算法在有限自动机的思想上做了一些调整，同样引入了`状�
 
 输入`T[9]=b`之后发现匹配则状态变成`q=4`。
 
-尝试将上述的观察过程理论化，发现因为`P[0..4]`的所有前缀中(除开`P[0..4]`本身)，与`T[4..8]`的后缀所匹配的最大长度是`3`![](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/images/icons/callouts/1.png)，所以尝试将`P`向右移动[当前状态`q=5`减去`3`等于`2`]个位置；又由于有`T[4..8]=P[0..4]`，所以![](https://www.elastic.co/guide/en/elasticsearch/reference/5.x/images/icons/callouts/1.png)处与`T[4..8]`作比较等价于与`P[0..4]`作比较。
+尝试将上述的观察过程理论化，发现因为`P[0..4]`的所有前缀中(除开`P[0..4]`本身)，与`T[4..8]`的后缀所匹配的最大长度是`3`<sup>1</sup>，所以尝试将`P`向右移动[当前状态`q=5`减去`3`等于`2`]个位置；又由于有`T[4..8]=P[0..4]`，所以`1`处与`T[4..8]`作匹配等价于与`P[0..4]`作匹配。
 
 ![图解kmp](https://github.com/Saber-Altria/note/blob/master/images/algorithms/kmp/kmp-pic.png?raw=true)
 
@@ -144,3 +142,7 @@ object KMPv2 {
 ```
 
 使用平摊分析法可知此算法的复杂度是`o(m+n)`，其中前缀函数`kmpPrefixFunc`的复杂度是`o(m)`，匹配函数`kmpMatch`的复杂度是`o(n)`。`(//TODO)`
+
+- - -
+参考文献：
+* 算法导论第三版

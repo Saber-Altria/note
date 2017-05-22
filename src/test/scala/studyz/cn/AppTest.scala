@@ -1,17 +1,13 @@
 package studyz.cn
 
-import org.junit._
-import Assert._
+import org.scalatest.FunSuite
 
-@Test
-class AppTest {
+class AppTest extends FunSuite{
 
-    @Test
-    def testOK() = assertTrue(true)
 
-//    @Test
-//    def testKO() = assertTrue(false)
-
+    test("AppTest"){
+        App.main(Array())
+    }
 }
 
 
