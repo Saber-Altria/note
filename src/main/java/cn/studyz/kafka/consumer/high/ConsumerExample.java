@@ -5,6 +5,7 @@ import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +30,9 @@ public class ConsumerExample {
     }
 
     public void shutdown(){
-        if(consumerConnector == null) consumerConnector.shutdown();
+        if(consumerConnector != null) consumerConnector.shutdown();
 
-        if(executor == null ) executor.shutdown();
+        if(executor != null ) executor.shutdown();
 
         try{
             if(!executor.awaitTermination(5000, TimeUnit.SECONDS)){
@@ -66,5 +67,35 @@ public class ConsumerExample {
         properties.put("zookeeper.sync.time.ms", "200");
         properties.put("auto.commit.interval.ms", "1000");
         return new ConsumerConfig(properties);
+    }
+
+    /**
+     *
+     kafka.zks=localhost:2191
+     kafka.topic=consumer-topic
+     kafka.group=high
+     kafka.consumer.threads=5
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+        InputStream is = ConsumerExample.class.getClassLoader().getResourceAsStream("./kafka.properties");
+        Properties properties = new Properties();
+
+        properties.load(is);
+        String zks = properties.getProperty("kafka.zks");
+        String topic = properties.getProperty("kafka.topic");
+        String group = properties.getProperty("kafka.group");
+        String consumer = properties.getProperty("kafka.consumer.threads");
+
+        ConsumerExample consumerExample = new ConsumerExample(zks, topic, group);
+        consumerExample.consume(new Integer(consumer));
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        consumerExample.shutdown();
     }
 }
